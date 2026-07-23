@@ -62,14 +62,9 @@ function parseJSON(str) {
   }
 }
 
-// Issue 9: Inefficient array contains check
+// Issue 9: Efficient array contains check using native includes()
 function hasUserId(userId, userIds) {
-  for (let i = 0; i < userIds.length; i++) {
-    if (userIds[i] === userId) {
-      return true;
-    }
-  }
-  return false;
+  return userIds.includes(userId);
 }
 
 // Issue 10: Cloning entire objects unnecessarily
