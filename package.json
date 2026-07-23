@@ -1,0 +1,12 @@
+{
+  "name": "sample-performance-app",
+  "version": "1.0.0",
+  "description": "Sample app with performance issues",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
