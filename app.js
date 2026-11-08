@@ -37,10 +37,15 @@ function formatData(data) {
   return JSON.stringify(parsed);
 }
 
-// Issue 6: Missing caching - recalculates on every call
+// Issue 6: Memoize results to avoid recalculating Fibonacci subproblems
+const fibonacciCache = new Map([[0, 0], [1, 1]]);
 function fibonacci(n) {
   if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
+  if (fibonacciCache.has(n)) return fibonacciCache.get(n);
+
+  const result = fibonacci(n - 1) + fibonacci(n - 2);
+  fibonacciCache.set(n, result);
+  return result;
 }
 
 // Issue 7: Inefficient string concatenation in loop
