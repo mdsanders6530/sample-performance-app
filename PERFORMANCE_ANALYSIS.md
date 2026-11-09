@@ -11,7 +11,7 @@ The sample is intentionally small, so impact estimates are qualitative. The firs
 | 5 | `/orders` repeats the join and serialization for unchanged mock data on every request. | Precompute the joined response once if the data remains static. | Medium | Medium |
 | 6 | `requestCount` is incremented for every request but never read. | Remove the write-only counter to avoid needless work on the hot path. | Low | Low |
 | 7 | `formatData` serializes, parses, and serializes the same value, creating avoidable allocations if called. | Remove the unused helper or serialize the original value once. | Low | Low |
-| 8 | `hasUserId` uses `Array.includes`, which is still O(n) for a lookup. | If the same ID collection is queried repeatedly, build and reuse a `Set`; keep `includes` for one-off lookups. | Medium when reused | Low |
+| 8 | `hasUserId` uses a manual loop, which takes O(n) for a lookup. | If the same ID collection is queried repeatedly, build and reuse a `Set`; `Array.includes` is a readability alternative for one-off lookups, not a complexity improvement. | Medium when reused | Low |
 | 9 | `buildQueryString` repeatedly appends strings and is currently unused. | For large parameter sets, benchmark building entries and joining once; use `URLSearchParams` when URL encoding is required. | Low / workload-dependent | Low |
 | 10 | `copyUser` copies every enumerable property and is currently unused. | Avoid cloning when callers only need selected fields; benchmark before changing a required full shallow copy. | Low / workload-dependent | Low |
 
