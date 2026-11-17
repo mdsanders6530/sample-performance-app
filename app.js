@@ -37,10 +37,17 @@ function formatData(data) {
   return JSON.stringify(parsed);
 }
 
-// Issue 6: Missing caching - recalculates on every call
+// Issue 6: Avoid exponential recomputation on every call
 function fibonacci(n) {
   if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
+  let previous = 0;
+  let current = 1;
+  for (let i = 2; i <= n; i++) {
+    const next = previous + current;
+    previous = current;
+    current = next;
+  }
+  return current;
 }
 
 // Issue 7: Inefficient string concatenation in loop
