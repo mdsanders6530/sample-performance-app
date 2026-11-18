@@ -37,10 +37,21 @@ function formatData(data) {
   return JSON.stringify(parsed);
 }
 
-// Issue 6: Missing caching - recalculates on every call
 function fibonacci(n) {
   if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
+
+  const cache = new Map();
+  function calculate(value) {
+    if (value <= 1) return value;
+
+    if (!cache.has(value)) {
+      cache.set(value, calculate(value - 1) + calculate(value - 2));
+    }
+
+    return cache.get(value);
+  }
+
+  return calculate(n);
 }
 
 // Issue 7: Inefficient string concatenation in loop
@@ -116,6 +127,10 @@ const server = http.createServer((req, res) => {
 });
 
 const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+  });
+}
+
+module.exports = { fibonacci };
