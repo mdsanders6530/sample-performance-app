@@ -4,7 +4,8 @@
   "description": "Sample app with performance issues",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node --test"
   },
   "keywords": [],
   "author": "",
